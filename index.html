@@ -14,55 +14,22 @@
 
   <script>
     async function main() {
-      // 1. LINE Developersで発行された LIFF ID に書き換え
+      // 1. 発行された LIFF ID を設定
       await liff.init({ liffId: "2011840176-UekOfFkC" });
 
+      // 2. ログインチェック
       if (!liff.isLoggedIn()) {
         liff.login();
       } else {
+        // 3. ユーザープロフィールの取得
         const profile = await liff.getProfile();
-        const userId = profile.userId;
+        const userId = profile.userId; // LINEのユーザーID (Uから始まる文字列)
 
-        // 2. Googleフォームの事前入力URL（entry.XXXXX= の直前まで）に書き換え
-        const formBaseUrl = "<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>フォームへ移動中...</title>
-  <!-- LIFF SDKの読み込み -->
-  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-</head>
-<body>
-  <div style="text-align: center; padding-top: 50px; font-family: sans-serif;">
-    <p>注文フォームに接続しています...</p>
-  </div>
-
-  <script>
-    async function main() {
-      // 1. LINE Developersで発行された LIFF ID に書き換え
-      await liff.init({ liffId: "2011840176-UekOfFkC" });
-
-      if (!liff.isLoggedIn()) {
-        liff.login();
-      } else {
-        const profile = await liff.getProfile();
-        const userId = profile.userId;
-
-        // 2. Googleフォームの事前入力URL（entry.XXXXX= の直前まで）に書き換え
-        const formBaseUrl = "https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?usp=pp_url&entry.1234567890=";
+        // 4. ステップ1で取得したGoogleフォームの事前入力URL
+        // DUMMY_ID の部分を ${userId} に差し替えます
+        const formBaseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdxUhGZtAAVV--CnVfi6NogwSv5X1ABFKG3J3WtdqoCCHVGjg/viewform?usp=pp_url&entry.226172803=${userId}";
         
-        // 自動転送
-        window.location.href = formBaseUrl + encodeURIComponent(userId);
-      }
-    }
-
-    main();
-  </script>
-</body>
-</html>";
-        
-        // 自動転送
+        // 5. 自動転送（自動入力された状態でフォームが開く）
         window.location.href = formBaseUrl + encodeURIComponent(userId);
       }
     }
@@ -71,3 +38,6 @@
   </script>
 </body>
 </html>
+フォーム一番下の「LINE User ID」項目に、自分のLINE ID（例: U123456789...）が自動的に入力されている。
+
+お客さんはそのまま商品や名前を選ぶだけで送信完了。
