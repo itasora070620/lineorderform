@@ -27,7 +27,7 @@
 
         // 4. ステップ1で取得したGoogleフォームの事前入力URL
         // DUMMY_ID の部分を ${userId} に差し替えます
-        const formBaseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdxUhGZtAAVV--CnVfi6NogwSv5X1ABFKG3J3WtdqoCCHVGjg/viewform?usp=pp_url&entry.226172803=${userId}";
+        const formBaseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdxUhGZtAAVV--CnVfi6NogwSv5X1ABFKG3J3WtdqoCCHVGjg/viewform?usp=pp_url&entry.226172803=";
         
         // 5. 自動転送（自動入力された状態でフォームが開く）
         window.location.href = formBaseUrl + encodeURIComponent(userId);
